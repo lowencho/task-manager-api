@@ -13,12 +13,18 @@ const {
 
 //Create user
 router.post("/users", async (req, res) => {
-  const me = new user(req.body);
+  const me = new user({
+    name: req.body.name,
+    email: req.body.email,
+    age: req.body.age,
+    password: req.body.password
+  });
 
   try {
     await me.save();
     sendWelcomeEmail(me.email, me.name); // a promise also
     const token = await me.generateAuthToken();
+    // res.redirect("/profile");
 
     res.status(201).send({ user: me, token });
   } catch (error) {
@@ -40,8 +46,8 @@ router.post("/users/login", async (req, res) => {
       req.body.password
     );
     const token = await userCredentials.generateAuthToken();
-    // res.send({ user: userCredentials, token }); //short-hand mode
-    res.send({ user: userCredentials, token });
+    res.send({ user: userCredentials, token }); //short-hand mode
+    // res.redirect("/profile");
   } catch (error) {
     res.status(400).send();
   }
@@ -169,4 +175,18 @@ router.get("/users/:id/avatar", async (req, res) => {
   }
 });
 
+//Read User profile
+router.get("/profile", auth, (req, res) => {
+  res.render("profile");
+});
+
+//serving register
+router.get("", (req, res) => {
+  res.render("register");
+});
+
+//serving login
+router.get("/signin", (req, res) => {
+  res.render("login");
+});
 module.exports = router;

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="/css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <form action='/users' method="post">
+      <h1>Task-App</h1>
+      <label>Name</label> <input id='name-input' placeholder="Name" name='name' type="text" required autocomplete="off" />
+      <label>Email</label> <input id='email-input' placeholder="Email" name='email' type="email" required />
+      <label>Age</label> <input id='age-input' placeholder="Age" name='age' type="number" autocomplete="off" />
+      <label>Password</label> <input id='password-input' placeholder="password" name='password' type="password" required />
+
+      <input type="submit" value="Sign up" >
+
+    </form>
+    <p>Already have an account?</p><a href='/signin'>Sign in</a>
+    <script src='/js/register.js'></script>
+  </body>
+</html>

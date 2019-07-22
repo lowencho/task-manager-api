@@ -109,6 +109,7 @@ userSchema.pre("save", async function(next) {
   const user = this; //this = document being saved
 
   if (user.isModified("password")) {
+    //true to updating and creating an account
     user.password = await bcrypt.hash(user.password, 8);
   }
 
