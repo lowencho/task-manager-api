@@ -1,6 +1,7 @@
 const user = require("../models/users.js");
 const express = require("express");
-const router = new express.Router(); //Create new instance
+const router = express.Router();
+// const router = require("express").Router(); //Create new instance
 const auth = require("../middleware/auth.js");
 const multer = require("multer");
 const sharp = require("sharp");
@@ -40,6 +41,7 @@ router.get("/users/me", auth, async (req, res) => {
 
 //Signing in - finding user by their credentials
 router.post("/users/login", async (req, res) => {
+  console.log(req);
   try {
     const userCredentials = await user.findByCredentials(
       req.body.email,
@@ -190,3 +192,6 @@ router.get("/signin", (req, res) => {
   res.render("login");
 });
 module.exports = router;
+// module.exports = function(app) {
+//   app.use("", router);
+// };
