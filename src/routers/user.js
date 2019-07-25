@@ -41,16 +41,19 @@ router.get("/users/me", auth, async (req, res) => {
 
 //Signing in - finding user by their credentials
 router.post("/users/login", async (req, res) => {
-  console.log(req);
+  // console.log(req.body);
   try {
     const userCredentials = await user.findByCredentials(
       req.body.email,
       req.body.password
     );
+    // console.log(userCredentials);
     const token = await userCredentials.generateAuthToken();
+    // console.log(token);
     res.send({ user: userCredentials, token }); //short-hand mode
     // res.redirect("/profile");
   } catch (error) {
+    console.log(error);
     res.status(400).send();
   }
 });
@@ -178,7 +181,7 @@ router.get("/users/:id/avatar", async (req, res) => {
 });
 
 //Read User profile
-router.get("/profile", auth, (req, res) => {
+router.get("/profile", (req, res) => {
   res.render("profile");
 });
 

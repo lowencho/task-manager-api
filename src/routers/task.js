@@ -6,7 +6,12 @@ const auth = require("../middleware/auth.js");
 //create task
 router.post("/tasks", auth, async (req, res) => {
   // const me = new task(req.body);
-  const me = new task({ ...req.body, owner: req.user._id });
+
+  const me = new task({
+    description: req.body.description,
+    completed: req.body.completed,
+    owner: req.user._id
+  });
   try {
     await me.save();
     res.status(201).send(me);

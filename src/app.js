@@ -1,7 +1,5 @@
 const express = require("express");
 require("./db/mongoose.js");
-const userRouter = require("./routers/user.js");
-const taskRouter = require("./routers/task.js");
 const hbs = require("hbs");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -18,9 +16,11 @@ app.set("view engine", "hbs");
 app.use(express.static(publicDirectoryPath));
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 // app.use(express.json());
+const userRouter = require("./routers/user.js");
+const taskRouter = require("./routers/task.js");
 app.use(userRouter);
 app.use(taskRouter);
-app.use(bodyParser.json());
 
 module.exports = app;
