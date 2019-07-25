@@ -21,6 +21,7 @@ const token = localStorage.getItem("token");
 
 createForm.addEventListener("submit", e => {
   e.preventDefault();
+
   axios
     .post(
       "http://localhost:3000/tasks",
@@ -30,9 +31,8 @@ createForm.addEventListener("submit", e => {
       },
       {
         headers: {
-          Authorization: "Bearer "`${token}`
-        },
-        withCredentials: true
+          Authorization: "Bearer " + token
+        }
       }
     )
     .then(response => {
@@ -41,18 +41,4 @@ createForm.addEventListener("submit", e => {
     .catch(error => {
       console.log(error);
     });
-
-//   const formData = {
-//     description: inputDesc.value,
-//     completed: inputComp.value
-//   };
-//   axios({
-//     method: "POST",
-//     url: "http://localhost:3000/tasks",{
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//       'Authorization': `Bearer ${token}`
-//     },withCredentials:true},
-//     data: formData
-//   });
-// });
+});
