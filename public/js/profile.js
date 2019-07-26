@@ -1,11 +1,22 @@
-const createForm = document.querySelector("form");
+const createTask = document.querySelector("form");
 const inputDesc = document.querySelector("#desc-input");
 const inputComp = document.querySelector("#comp-input");
 const tasks = document.querySelector("#tasks");
+const deleteTask = document.querySelector("#delete");
+const updateTask = document.querySelector("#update");
+const inputID = document.querySelector("#id");
 
 const token = localStorage.getItem("token");
 
-createForm.addEventListener("submit", e => {
+//View
+const taskUl = document.querySelector("ul");
+const taskComp = document.querySelector("span");
+
+//Logout
+const logoutButton = document.querySelector("#logout");
+
+//Create Task
+createTask.addEventListener("submit", e => {
   e.preventDefault();
 
   axios
@@ -23,12 +34,38 @@ createForm.addEventListener("submit", e => {
     )
     .then(response => {
       console.log(response);
+      // const taskList = document.createElement("li");
     })
     .catch(error => {
       console.log(error);
     });
 });
 
+//Delete Task
+deleteTask.addEventListener("click", e => {
+  axios.delete(
+    "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
+    {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+  );
+});
+
+//Update Task
+deleteTask.addEventListener("click", e => {
+  axios.patch(
+    "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
+    {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+  );
+});
+
+//Read Task
 window.addEventListener("load", e => {
   axios
     .get("http://localhost:3000/tasks", {
@@ -37,15 +74,34 @@ window.addEventListener("load", e => {
       }
     })
     .then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       const allTask = response.data;
-      const taskUl = document.querySelector("ul");
+      // const taskUl = document.querySelector("ul");
+
+      //array
       allTask.forEach(task => {
         console.log(task.description + " " + task.completed);
         const taskList = document.createElement("li");
+
         taskList.textContent = task.description + " " + task.completed;
         taskUl.appendChild(taskList);
       });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+//Logout User
+logoutButton.addEventListener("click", e => {
+  axios
+    .post("/users/logout", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+    .then(response => {
+      window.location = "/signin";
     })
     .catch(error => {
       console.log(error);

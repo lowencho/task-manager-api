@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/login.css" rel="stylesheet" />
   </head>
   <body>
-    <form >
+    <div class="centered-form">
+      <div class="centered-form__box">
       <h1>Task-App</h1>
-      <label>Email</label> <input id="email-input" name="email" placeholder="Email" required/>
-      <label>Password</label> <input id="password-input" name="password" placeholder="Password" required type="password"/>
+    <form >
+
+      <label>Email</label> <input id="email-input" name="email"  required/>
+      <label>Password</label> <input id="password-input" name="password"  required type="password"/>
 
       <input id='input-submit' value="Sign in" type="submit">
     </form>
+  </div>
+</div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src='/js/login.js'></script>
   </body>

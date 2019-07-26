@@ -1,6 +1,7 @@
 #tasks {
   margin-top: 20px;
   background-color: orange;
-  height: auto;
+  height: 200px;
   width: auto;
+  overflow: auto;
 }

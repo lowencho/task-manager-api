@@ -11,9 +11,17 @@
     <label>Description</label><input id="desc-input" name='description' required>
     <label>Completed</label><input id="comp-input" name='completed' type="text">
     <input type="submit" value="Create">
+
   </form>
+  <div>
+  <input id='id' type="text" placeholder="ID">
+  <button id='delete'>Delete</button>
+  <button id='update'>Update</button>
+  <button id='logout'>Log out</button>
+</div>
   <div id='tasks'>
     <ul>
+      <!-- <span id='checkedbox'><i class="far fa-check-square"></i></span> -->
     </ul>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
