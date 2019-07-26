@@ -39,8 +39,12 @@ window.addEventListener("load", e => {
     .then(response => {
       console.log(response.data);
       const allTask = response.data;
+      const taskUl = document.querySelector("ul");
       allTask.forEach(task => {
-        console.log(task.description);
+        console.log(task.description + " " + task.completed);
+        const taskList = document.createElement("li");
+        taskList.textContent = task.description + " " + task.completed;
+        taskUl.appendChild(taskList);
       });
     })
     .catch(error => {
