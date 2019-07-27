@@ -9,7 +9,7 @@ const inputID = document.querySelector("#id");
 const token = localStorage.getItem("token");
 
 //View
-const taskUl = document.querySelector("ul");
+const taskUl = document.querySelector("#ul");
 const taskComp = document.querySelector("span");
 
 //Logout
@@ -18,7 +18,6 @@ const logoutButton = document.querySelector("#logout");
 //Create Task
 createTask.addEventListener("submit", e => {
   e.preventDefault();
-
   axios
     .post(
       "http://localhost:3000/tasks",
@@ -34,7 +33,9 @@ createTask.addEventListener("submit", e => {
     )
     .then(response => {
       console.log(response);
-      // const taskList = document.createElement("li");
+
+      const data = response.data.description + " " + response.data.completed;
+      taskUl.insertAdjacentHTML("beforeend", `<li>${data}</li>`);
     })
     .catch(error => {
       console.log(error);
@@ -74,11 +75,9 @@ window.addEventListener("load", e => {
       }
     })
     .then(response => {
-      // console.log(response.data);
-      const allTask = response.data;
-      // const taskUl = document.querySelector("ul");
+      console.log(response.data);
+      const allTask = response.data; //Array of the task
 
-      //array
       allTask.forEach(task => {
         console.log(task.description + " " + task.completed);
         const taskList = document.createElement("li");
@@ -94,13 +93,15 @@ window.addEventListener("load", e => {
 
 //Logout User
 logoutButton.addEventListener("click", e => {
+  console.log("Clicked");
   axios
-    .post("/users/logout", {
+    .post("http://localhost:3000/users/logout", {
       headers: {
         Authorization: "Bearer " + token
       }
     })
     .then(response => {
+      console.log(response);
       window.location = "/signin";
     })
     .catch(error => {
