@@ -5,3 +5,11 @@
   width: auto;
   overflow: auto;
 }
+
+#image-upload {
+}
+
+#profile-photo {
+  height: 100px;
+  width: 100px;
+}

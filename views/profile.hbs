@@ -5,11 +5,16 @@
 </head>
 <body>
   <h1>Profile</h1>
+  <div id='photo-container'>
+    <img id="profile-photo" src='/img/avatar-male.jpg'>
+  </div>
+  <input type="file" accept="image/jpeg image/x-png" id="choose-image-upload">
+  <input type='button' id="image-upload" value="Upload">
   <h2>My Task</h2>
 
   <form >
-    <label>Description</label><input id="desc-input" name='description' required>
-    <label>Completed</label><input id="comp-input" name='completed' type="text">
+    <label>Description</label><input id="desc-input" name='description' autocomplete="off" required>
+    <label>Completed</label><input id="comp-input" name='completed' autocomplete="off" type="text">
     <input type="submit" value="Create">
 
   </form>
