@@ -150,7 +150,7 @@ router.post(
     // req.user.avatar = req.file.buffer;
 
     await req.user.save();
-    res.send();
+    res.send({ avatar: req.user.avatar });
   },
   (error, req, res, next) => {
     res.status(400).send({ Error: error.message });

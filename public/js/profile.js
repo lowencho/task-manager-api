@@ -5,8 +5,16 @@ const tasks = document.querySelector("#tasks");
 const deleteTask = document.querySelector("#delete");
 const updateTask = document.querySelector("#update");
 const inputID = document.querySelector("#id");
+
+//Avatar menus
+const profilePhoto = document.querySelector("#profile-photo");
 const choosePhoto = document.querySelector("#choose-image-upload");
 const uploadPhoto = document.querySelector("#image-upload");
+const deletePhoto = document.querySelector("#image-delete");
+const updatePhoto = document.querySelector("#update-avatar");
+const modal = document.querySelector("#modal");
+const closeModal = document.querySelector("#close-button");
+const imagePreview = document.querySelector("#image-preview");
 
 const token = localStorage.getItem("token");
 
@@ -111,14 +119,63 @@ logoutButton.addEventListener("click", e => {
     });
 });
 
-//Upload image
+//Upload image to db
 uploadPhoto.addEventListener("click", e => {
   const formData = new FormData();
   formData.append("avatar", choosePhoto.files[0]);
-  axios.post("http://localhost:3000/users/me/avatar", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + token
-    }
+  axios
+    .post("http://localhost:3000/users/me/avatar", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: "Bearer " + token
+      }
+    })
+    .then(response => {
+      console.log(response);
+      const imageBuffer = response.data.avatar;
+
+      profilePhoto.src = "data:image/jpeg;base64," + imageBuffer;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+//Delete image
+deletePhoto.addEventListener("click", e => {
+  axios.delete("http://localhost:3000/users/me/avatar", {
+    headers: { Authorization: "Bearer " + token }
   });
+});
+
+//Update Photo
+updatePhoto.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+
+window.onclick = () => {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+closeModal.onclick = () => {
+  modal.style.display = "none";
+};
+
+//Image preview
+choosePhoto.addEventListener("change", () => {
+  const reader = new FileReader();
+  const photo = choosePhoto.files[0];
+
+  reader.addEventListener(
+    "load",
+    () => {
+      imagePreview.src = reader.result;
+    },
+    false
+  );
+  if (photo) {
+    reader.readAsDataURL(photo);
+  }
 });
