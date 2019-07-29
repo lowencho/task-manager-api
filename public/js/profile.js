@@ -71,15 +71,23 @@ deleteTask.addEventListener("click", e => {
 });
 
 //Update Task
-deleteTask.addEventListener("click", e => {
-  axios.patch(
-    "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-    {
-      headers: {
-        Authorization: "Bearer " + token
+updateTask.addEventListener("click", e => {
+  const dataBody = {
+    description: inputDesc.value,
+    completed: inputComp.value
+  };
+
+  axios
+    .patch(
+      "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
+      dataBody,
+      {
+        headers: {
+          Authorization: "Bearer " + token
+        }
       }
-    }
-  );
+    )
+    .then(response => {});
 });
 
 //Read Task
@@ -91,11 +99,14 @@ window.addEventListener("load", e => {
       }
     })
     .then(response => {
-      console.log(response.data);
+      // console.log(response);
+      // console.log(response.data);
       const allTask = response.data; //Array of the task
 
+      // profilePhoto.src = "data:image/jpg;base64,";
+
       allTask.forEach(task => {
-        console.log(task.description + " " + task.completed);
+        // console.log(task.description + " " + task.completed);
         const taskList = document.createElement("li");
 
         // taskList.textContent = task.description + " " + task.completed;
@@ -145,9 +156,7 @@ uploadPhoto.addEventListener("click", e => {
     })
     .then(response => {
       console.log(response);
-      const imageBuffer = response.data.avatar;
-
-      profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
+      const imageBuffer = response.data.avatar.data;
     })
     .catch(error => {
       console.log(error);
@@ -161,7 +170,7 @@ deletePhoto.addEventListener("click", e => {
   });
 });
 
-//Update Photo
+//Update Photo modal
 updatePhoto.addEventListener("click", () => {
   modal.style.display = "block";
 });

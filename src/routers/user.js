@@ -142,7 +142,7 @@ router.post(
   async (req, res) => {
     //takes the buffer and converts image to png format and resize
     const buffer = await sharp(req.file.buffer)
-      .resize({ width: 250, height: 250 })
+      .resize({ width: 100, height: 100 })
       .png()
       .toBuffer();
 
