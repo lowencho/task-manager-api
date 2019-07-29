@@ -8,9 +8,11 @@ const app = express();
 
 //Define path express config
 const publicDirectoryPath = path.join(__dirname, "../public");
+// const partialsPath = path.join(__dirname, "../templates/partials");
 
 //set up handlebars and engine
 app.set("view engine", "hbs");
+// hbs.registerPartials(partialsPath);
 
 //Set up directory to serve
 app.use(express.static(publicDirectoryPath));

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='/css/profile.css' rel='stylesheet'>
+  <link
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      rel="stylesheet"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+</head>
+<body>
+  <div id="div-container">
+    <!-- {{>header}} -->
+
+    <div id="content-page">
+
+      <h2>My Task</h2>
+
+      <form >
+        <label>Description</label><input id="desc-input" name='description' autocomplete="off" required>
+        <label>Completed</label><input id="comp-input" name='completed' autocomplete="off" type="text">
+        <input type="submit" value="Create">
+
+      </form>
+      <div>
+      <input id='id' type="text" placeholder="ID">
+      <button id='delete'>Delete</button>
+      <button id='update'>Update</button>
+      <button id='logout'>Log out</button>
+    </div>
+      <div id='tasks'>
+        <ul id='ul'>
+          <!-- <span id='checkedbox'><i class="far fa-check-square"></i></span> -->
+        </ul>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src ="/js/profile.js"></script>
+</body>
+</html>

@@ -5,6 +5,7 @@ const tasks = document.querySelector("#tasks");
 const deleteTask = document.querySelector("#delete");
 const updateTask = document.querySelector("#update");
 const inputID = document.querySelector("#id");
+const deleteAccount = document.querySelector("#delete-account");
 
 //Avatar menus
 const profilePhoto = document.querySelector("#profile-photo");
@@ -43,7 +44,13 @@ createTask.addEventListener("submit", e => {
     .then(response => {
       console.log(response);
 
-      const data = response.data.description + " " + response.data.completed;
+      // const data = response.data.description + " " + response.data.completed;
+      if (response.data.completed === true) {
+        data = response.data.description + " " + "✔";
+      } else {
+        data = response.data.description + " " + "✖";
+      }
+
       taskUl.insertAdjacentHTML("beforeend", `<li>${data}</li>`);
     })
     .catch(error => {
@@ -91,7 +98,13 @@ window.addEventListener("load", e => {
         console.log(task.description + " " + task.completed);
         const taskList = document.createElement("li");
 
-        taskList.textContent = task.description + " " + task.completed;
+        // taskList.textContent = task.description + " " + task.completed;
+
+        if (task.completed === true) {
+          taskList.textContent = task.description + " " + "✔";
+        } else {
+          taskList.textContent = task.description + " " + "✖";
+        }
         taskUl.appendChild(taskList);
       });
     })
@@ -134,7 +147,7 @@ uploadPhoto.addEventListener("click", e => {
       console.log(response);
       const imageBuffer = response.data.avatar;
 
-      profilePhoto.src = "data:image/jpeg;base64," + imageBuffer;
+      profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
     })
     .catch(error => {
       console.log(error);
@@ -178,4 +191,17 @@ choosePhoto.addEventListener("change", () => {
   if (photo) {
     reader.readAsDataURL(photo);
   }
+});
+
+//Delete Account
+deleteAccount.addEventListener("click", () => {
+  // const data = {};
+  axios
+    .delete("http://localhost:3000/users/me", {
+      headers: { Authorization: "Bearer " + token }
+    })
+    .then(response => {
+      console.log(response);
+      window.location = "/";
+    });
 });

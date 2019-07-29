@@ -194,6 +194,12 @@ router.get("", (req, res) => {
 router.get("/signin", (req, res) => {
   res.render("login");
 });
+
+//serving tasks
+// router.get("/Mytasks", (req, res) => {
+//   res.render("myTasks");
+// });
+
 module.exports = router;
 // module.exports = function(app) {
 //   app.use("", router);
