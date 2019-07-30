@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href='/css/profile.css' rel='stylesheet'>
+  <link
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      rel="stylesheet"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="div-container">
+  {{>navbar}}
+
+    <div id="content-page">
+      <h1>Profile</h1>
+
+      <div id='photo-container'>
+        <img id="profile-photo" src='/img/avatar-male.jpg'>
+        <i class="fa fa-camera upload-button"></i>
+        <input type="button" id="update-avatar" value="Update Avatar">
+
+        <!--Modal -->
+        <div id='modal'>
+          <div id="modal-content">
+            <span id="close-button">&times;</span> <br>
+
+            <img src="/img/avatar-male.jpg" id="image-preview" alt="image preview..">
+
+            <div id="modal-buttons">
+            <input  type="file" accept="image/jpeg image/x-png" id="choose-image-upload">
+
+
+            <input type='button' id="image-upload" value="Save Photo as Avatar" onclick="location.reload();">
+            <input type='button' id='image-delete' value='Remove Photo' onclick="location.reload();">
+          </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+      <p id='user-name'></p>
+      <p id ='user-id'></p>
+      <p id ='user-email'></p>
+      <p id = 'user-age'></p>
+    </div>
+
+
+  </div>
+
+
+  <!-- <br>
+  <br>
+<hr> -->
+  <!-- <h2>My Task</h2>
+
+  <form >
+    <label>Description</label><input id="desc-input" name='description' autocomplete="off" required>
+    <label>Completed</label><input id="comp-input" name='completed' autocomplete="off" type="text" list="boolean">
+    <datalist id="boolean">
+    <option value="true">
+    <option value="false">
+  </datalist>
+    <input type="submit" value="Create">
+
+  </form>
+  <div>
+  <input id='id' type="text" placeholder="ID">
+  <button id='delete'>Delete</button>
+  <button id='update'>Update</button>
+  <button id='logout'>Log out</button>
+  <button id='delete-account'>Delete Account</button>
+</div>
+  <div id='tasks'>
+    <ul id='ul'>
+
+    </ul>
+  </div> -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src ="/js/profile.js"></script>
+</body>
+</html>

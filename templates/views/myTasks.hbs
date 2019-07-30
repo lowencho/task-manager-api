@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="div-container">
-    <!-- {{>header}} -->
+    {{>navbar}}
 
     <div id="content-page">
 
@@ -19,7 +19,11 @@
 
       <form >
         <label>Description</label><input id="desc-input" name='description' autocomplete="off" required>
-        <label>Completed</label><input id="comp-input" name='completed' autocomplete="off" type="text">
+        <label>Completed</label><input id="comp-input" name='completed' autocomplete="off" type="text" list="boolean">
+        <datalist id="boolean">
+        <option value="true">
+        <option value="false">
+      </datalist>
         <input type="submit" value="Create">
 
       </form>
@@ -28,6 +32,7 @@
       <button id='delete'>Delete</button>
       <button id='update'>Update</button>
       <button id='logout'>Log out</button>
+      <button id='delete-account'>Delete Account</button>
     </div>
       <div id='tasks'>
         <ul id='ul'>
@@ -44,6 +49,6 @@
 
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src ="/js/profile.js"></script>
+  <script src ="/js/mytask.js"></script>
 </body>
 </html>

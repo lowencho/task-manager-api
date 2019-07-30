@@ -196,9 +196,9 @@ router.get("/signin", (req, res) => {
 });
 
 //serving tasks
-// router.get("/Mytasks", (req, res) => {
-//   res.render("myTasks");
-// });
+router.get("/Mytasks", (req, res) => {
+  res.render("myTasks");
+});
 
 module.exports = router;
 // module.exports = function(app) {

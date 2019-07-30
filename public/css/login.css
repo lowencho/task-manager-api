@@ -45,3 +45,8 @@ label {
 #input-submit:hover {
   background: #34495e;
 }
+
+#register-account {
+  color: black;
+  width: 100%;
+}

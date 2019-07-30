@@ -1,12 +1,3 @@
-const createTask = document.querySelector("form");
-const inputDesc = document.querySelector("#desc-input");
-const inputComp = document.querySelector("#comp-input");
-const tasks = document.querySelector("#tasks");
-const deleteTask = document.querySelector("#delete");
-const updateTask = document.querySelector("#update");
-const inputID = document.querySelector("#id");
-const deleteAccount = document.querySelector("#delete-account");
-
 //Avatar menus
 const profilePhoto = document.querySelector("#profile-photo");
 const choosePhoto = document.querySelector("#choose-image-upload");
@@ -17,131 +8,13 @@ const modal = document.querySelector("#modal");
 const closeModal = document.querySelector("#close-button");
 const imagePreview = document.querySelector("#image-preview");
 
+//User info
+const userName = document.querySelector("#user-name");
+const userId = document.querySelector("#user-id");
+const userEmail = document.querySelector("#user-email");
+const userAge = document.querySelector("#user-age");
+
 const token = localStorage.getItem("token");
-
-//View
-const taskUl = document.querySelector("#ul");
-
-//Logout
-const logoutButton = document.querySelector("#logout");
-
-//Create Task
-createTask.addEventListener("submit", e => {
-  e.preventDefault();
-  axios
-    .post(
-      "http://localhost:3000/tasks",
-      {
-        description: inputDesc.value,
-        completed: inputComp.value
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      }
-    )
-    .then(response => {
-      console.log(response);
-
-      // const data = response.data.description + " " + response.data.completed;
-      if (response.data.completed === true) {
-        data = response.data.description + " " + "✔";
-      } else {
-        data = response.data.description + " " + "✖";
-      }
-
-      taskUl.insertAdjacentHTML("beforeend", `<li>${data}</li>`);
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
-
-//Delete Task
-deleteTask.addEventListener("click", e => {
-  axios.delete(
-    "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-    {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    }
-  );
-});
-
-//Update Task
-updateTask.addEventListener("click", e => {
-  const dataBody = {
-    description: inputDesc.value,
-    completed: inputComp.value
-  };
-
-  axios
-    .patch(
-      "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-      dataBody,
-      {
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      }
-    )
-    .then(response => {});
-});
-
-//Read Task
-window.addEventListener("load", e => {
-  axios
-    .get("http://localhost:3000/tasks", {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    })
-    .then(response => {
-      // console.log(response);
-      // console.log(response.data);
-      const allTask = response.data; //Array of the task
-
-      // profilePhoto.src = "data:image/jpg;base64,";
-
-      allTask.forEach(task => {
-        // console.log(task.description + " " + task.completed);
-        const taskList = document.createElement("li");
-
-        // taskList.textContent = task.description + " " + task.completed;
-
-        if (task.completed === true) {
-          taskList.textContent = task.description + " " + "✔";
-        } else {
-          taskList.textContent = task.description + " " + "✖";
-        }
-        taskUl.appendChild(taskList);
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
-
-//Logout User
-logoutButton.addEventListener("click", e => {
-  const dataBody = {};
-  console.log("Clicked");
-  axios
-    .post("http://localhost:3000/users/logout", dataBody, {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    })
-    .then(response => {
-      console.log(response);
-      window.location = "/signin";
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
 
 //Upload image to db
 uploadPhoto.addEventListener("click", e => {
@@ -157,6 +30,7 @@ uploadPhoto.addEventListener("click", e => {
     .then(response => {
       console.log(response);
       const imageBuffer = response.data.avatar.data;
+      // profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
     })
     .catch(error => {
       console.log(error);
@@ -202,15 +76,22 @@ choosePhoto.addEventListener("change", () => {
   }
 });
 
-//Delete Account
-deleteAccount.addEventListener("click", () => {
-  // const data = {};
+//Read user profile
+window.addEventListener("load", () => {
   axios
-    .delete("http://localhost:3000/users/me", {
-      headers: { Authorization: "Bearer " + token }
+    .get("http://localhost:3000/users/me", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
     .then(response => {
       console.log(response);
-      window.location = "/";
+      userName.textContent = "Name: " + response.data.name;
+      userId.textContent = "ID: " + response.data._id;
+      userEmail.textContent = "Email: " + response.data.email;
+      userAge.textContent = "Age: " + response.data.age;
+    })
+    .catch(error => {
+      console.log(error);
     });
 });

@@ -45,3 +45,7 @@ label {
 #submit:hover {
   background: #34495e;
 }
+
+a {
+  color: black;
+}
