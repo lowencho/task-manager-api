@@ -4,8 +4,11 @@ const inputComp = document.querySelector("#comp-input");
 const tasks = document.querySelector("#tasks");
 const deleteTask = document.querySelector("#delete");
 const updateTask = document.querySelector("#update");
-const inputID = document.querySelector("#id");
+// const inputID = document.querySelector("#id");
+const inputPosition = document.querySelector("#position");
 const deleteAccount = document.querySelector("#delete-account");
+const sortByCompleted = document.querySelector("#sort-input");
+const sort = document.querySelector("#sort");
 
 const token = localStorage.getItem("token");
 
@@ -50,39 +53,40 @@ createTask.addEventListener("submit", e => {
     });
 });
 
-//Delete Task
-deleteTask.addEventListener("click", e => {
-  axios.delete(
-    "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-    {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    }
-  );
-});
-
-//Update Task
-updateTask.addEventListener("click", e => {
-  const dataBody = {
-    description: inputDesc.value,
-    completed: inputComp.value
-  };
-
-  axios
-    .patch(
-      "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-      dataBody,
-      {
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      }
-    )
-    .then(response => {});
-});
+// //Delete Task
+// deleteTask.addEventListener("click", e => {
+//   axios.delete(
+//     "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
+//     {
+//       headers: {
+//         Authorization: "Bearer " + token
+//       }
+//     }
+//   );
+// });
+//
+// //Update Task
+// updateTask.addEventListener("click", e => {
+//   const dataBody = {
+//     description: inputDesc.value,
+//     completed: inputComp.value
+//   };
+//
+//   axios
+//     .patch(
+//       "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
+//       dataBody,
+//       {
+//         headers: {
+//           Authorization: "Bearer " + token
+//         }
+//       }
+//     )
+//     .then(response => {});
+// });
 
 //Read Task
+
 window.addEventListener("load", e => {
   axios
     .get("http://localhost:3000/tasks", {
@@ -92,24 +96,69 @@ window.addEventListener("load", e => {
     })
     .then(response => {
       // console.log(response);
-      // console.log(response.data);
+      console.log(response.data);
       const allTask = response.data; //Array of the task
 
       // profilePhoto.src = "data:image/jpg;base64,";
-
-      allTask.forEach(task => {
-        // console.log(task.description + " " + task.completed);
-        const taskList = document.createElement("li");
-
-        // taskList.textContent = task.description + " " + task.completed;
-
-        if (task.completed === true) {
-          taskList.textContent = task.description + " " + "✔";
-        } else {
-          taskList.textContent = task.description + " " + "✖";
-        }
-        taskUl.appendChild(taskList);
+      //Delete Task
+      // allTask[]
+      deleteTask.addEventListener("click", e => {
+        axios
+          .delete(
+            "http://localhost:3000/tasks/" +
+              encodeURIComponent(allTask[inputPosition.value]._id),
+            {
+              headers: {
+                Authorization: "Bearer " + token
+              }
+            }
+          )
+          .then(response => {
+            // view.display();
+          });
       });
+
+      //Update Task
+      updateTask.addEventListener("click", e => {
+        const dataBody = {
+          description: inputDesc.value,
+          completed: inputComp.value
+        };
+
+        axios
+          .patch(
+            "http://localhost:3000/tasks/" +
+              encodeURIComponent(allTask[inputPosition.value]._id),
+            dataBody,
+            {
+              headers: {
+                Authorization: "Bearer " + token
+              }
+            }
+          )
+          .then(response => {
+            // view.display();
+          });
+      });
+
+      const view = {
+        display() {
+          allTask.forEach(task => {
+            // console.log(task.description + " " + task.completed);
+            const taskList = document.createElement("li");
+
+            // taskList.textContent = task.description + " " + task.completed;
+
+            if (task.completed === true) {
+              taskList.textContent = task.description + " " + "✔";
+            } else {
+              taskList.textContent = task.description + " " + "✖";
+            }
+            taskUl.appendChild(taskList);
+          });
+        }
+      };
+      view.display();
     })
     .catch(error => {
       console.log(error);
@@ -146,4 +195,66 @@ deleteAccount.addEventListener("click", () => {
       console.log(response);
       window.location = "/";
     });
+});
+
+//Sort by Completed
+sortByCompleted.addEventListener("change", () => {
+  console.log("changed");
+  if (sortByCompleted.value === true) {
+    axios
+      .get("http://localhost:3000/tasks?completed=true", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+      .then(response => {
+        // console.log(response);
+        console.log(response.data);
+        const allTask = response.data; //Array of the task
+
+        // profilePhoto.src = "data:image/jpg;base64,";
+
+        allTask.forEach(task => {
+          // console.log(task.description + " " + task.completed);
+          const taskList = document.createElement("li");
+
+          // taskList.textContent = task.description + " " + task.completed;
+
+          if (task.completed === true) {
+            taskList.textContent = task.description + " " + "✔";
+          } else {
+            taskList.textContent = task.description + " " + "✖";
+          }
+          taskUl.appendChild(taskList);
+        });
+      });
+  } else if (sortByCompleted.value === false) {
+    axios
+      .get("http://localhost:3000/tasks?completed=false", {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+      .then(response => {
+        // console.log(response);
+        // console.log(response.data);
+        const allTask = response.data; //Array of the task
+
+        // profilePhoto.src = "data:image/jpg;base64,";
+
+        allTask.forEach(task => {
+          // console.log(task.description + " " + task.completed);
+          const taskList = document.createElement("li");
+
+          // taskList.textContent = task.description + " " + task.completed;
+
+          if (task.completed === true) {
+            taskList.textContent = task.description + " " + "✔";
+          } else {
+            taskList.textContent = task.description + " " + "✖";
+          }
+          taskUl.appendChild(taskList);
+        });
+      });
+  }
 });

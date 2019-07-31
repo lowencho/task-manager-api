@@ -29,12 +29,19 @@
 
       </form>
       <div>
-      <input id='id' type="text" placeholder="ID">
+      
+      <input id='position' type='number'placeholder='position'>
       <button id='delete'>Delete</button>
       <button id='update'>Update</button>
       <button id='logout'>Log out</button>
       <button id='delete-account'>Delete Account</button>
     </div>
+    <label>Sort By Completed: </label> <input id="sort-input" autocomplete="off" type="text" list="boolean">
+    <datalist id="boolean">
+    <option value="true">
+    <option value="false">
+  </datalist>
+  <!-- <button id='sort'>Sort</button> -->
       <div id='tasks'>
         <ul id='ul'>
           <!-- <span id='checkedbox'><i class="far fa-check-square"></i></span> -->
