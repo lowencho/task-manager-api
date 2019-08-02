@@ -8,6 +8,7 @@ const inputPosition = document.querySelector("#position");
 const deleteAccount = document.querySelector("#delete-account");
 const sortByCompleted = document.querySelector("#sort-input");
 const sort = document.querySelector("#sort");
+// const sortButton = document.querySelector("#sort-button");
 
 const token = localStorage.getItem("token");
 
@@ -183,7 +184,7 @@ deleteAccount.addEventListener("click", () => {
 //Sort by Completed
 sortByCompleted.addEventListener("change", () => {
   console.log("changed");
-  if (sortByCompleted.value === true) {
+  if (sortByCompleted.value === "true") {
     axios
       .get("http://localhost:3000/tasks?completed=true", {
         headers: {
@@ -191,7 +192,20 @@ sortByCompleted.addEventListener("change", () => {
         }
       })
       .then(response => {
-        view.display();
+        console.log(response.data);
+        const taskComplete = response.data;
+        taskUl.innerHTML = "";
+        // view.display();
+        taskComplete.forEach(task => {
+          const taskList = document.createElement("li");
+
+          if (task.completed === true) {
+            taskList.textContent = task.description + " " + "✔";
+          } else {
+            taskList.textContent = task.description + " " + "✖";
+          }
+          taskUl.appendChild(taskList);
+        });
       });
   } else {
     axios
@@ -201,7 +215,20 @@ sortByCompleted.addEventListener("change", () => {
         }
       })
       .then(response => {
-        view.display();
+        console.log(response.data);
+        const taskComplete = response.data;
+        taskUl.innerHTML = "";
+        // view.display();
+        taskComplete.forEach(task => {
+          const taskList = document.createElement("li");
+
+          if (task.completed === true) {
+            taskList.textContent = task.description + " " + "✔";
+          } else {
+            taskList.textContent = task.description + " " + "✖";
+          }
+          taskUl.appendChild(taskList);
+        });
       });
   }
 });
