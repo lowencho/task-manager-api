@@ -16,6 +16,10 @@ const userAge = document.querySelector("#user-age");
 
 const token = localStorage.getItem("token");
 
+//Logout
+const logoutButton = document.querySelector("#logout");
+const deleteAccount = document.querySelector("#delete-account");
+
 //Upload image to db
 uploadPhoto.addEventListener("click", e => {
   const formData = new FormData();
@@ -108,7 +112,7 @@ window.addEventListener("load", () => {
             "/avatar"
         )
         .then(response => {
-          console.log(response);
+          console.log(response.data);
           profilePhoto.src = "data:image/jpg;base64,";
         });
       // const imageBuffers = btoa(
@@ -120,5 +124,36 @@ window.addEventListener("load", () => {
 
     .catch(error => {
       console.log(error);
+    });
+});
+
+//Logout User
+logoutButton.addEventListener("click", e => {
+  const dataBody = {};
+  console.log("Clicked");
+  axios
+    .post("http://localhost:3000/users/logout", dataBody, {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+    .then(response => {
+      console.log(response);
+      window.location = "/signin";
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+//Delete Account
+deleteAccount.addEventListener("click", () => {
+  axios
+    .delete("http://localhost:3000/users/me", {
+      headers: { Authorization: "Bearer " + token }
+    })
+    .then(response => {
+      console.log(response);
+      window.location = "/";
     });
 });
