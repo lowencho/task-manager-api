@@ -18,6 +18,25 @@ const taskUl = document.querySelector("#ul");
 //Logout
 const logoutButton = document.querySelector("#logout");
 
+var taskArray = [];
+console.log(taskArray);
+
+const view = {
+  display() {
+    taskUl.innerHTML = "";
+    taskArray.forEach(task => {
+      const taskList = document.createElement("li");
+
+      if (task.completed === true) {
+        taskList.textContent = task.description + " " + "✔";
+      } else {
+        taskList.textContent = task.description + " " + "✖";
+      }
+      taskUl.appendChild(taskList);
+    });
+  }
+};
+
 //Create Task
 createTask.addEventListener("submit", e => {
   e.preventDefault();
@@ -35,16 +54,20 @@ createTask.addEventListener("submit", e => {
       }
     )
     .then(response => {
-      console.log(response);
+      console.log(response.data);
+      const task = response.data;
+      taskArray.push(task);
+      view.display();
 
       // const data = response.data.description + " " + response.data.completed;
-      if (response.data.completed === true) {
-        data = response.data.description + " " + "✔";
-      } else {
-        data = response.data.description + " " + "✖";
-      }
+      // if (task.completed === true) {
+      //   data = task.description + " " + "✔";
+      // } else {
+      //   data = task.description + " " + "✖";
+      // }
+      //
+      // taskUl.insertAdjacentHTML("beforeend", `<li>${data}</li>`);
 
-      taskUl.insertAdjacentHTML("beforeend", `<li>${data}</li>`);
       inputDesc.value = "";
       inputComp.value = "";
     })
@@ -53,40 +76,52 @@ createTask.addEventListener("submit", e => {
     });
 });
 
-// //Delete Task
-// deleteTask.addEventListener("click", e => {
-//   axios.delete(
-//     "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-//     {
-//       headers: {
-//         Authorization: "Bearer " + token
-//       }
-//     }
-//   );
-// });
-//
-// //Update Task
-// updateTask.addEventListener("click", e => {
-//   const dataBody = {
-//     description: inputDesc.value,
-//     completed: inputComp.value
-//   };
-//
-//   axios
-//     .patch(
-//       "http://localhost:3000/tasks/" + encodeURIComponent(inputID.value),
-//       dataBody,
-//       {
-//         headers: {
-//           Authorization: "Bearer " + token
-//         }
-//       }
-//     )
-//     .then(response => {});
-// });
+//Delete Task
+deleteTask.addEventListener("click", e => {
+  axios
+    .delete(
+      "http://localhost:3000/tasks/" +
+        encodeURIComponent(taskArray[inputPosition.value]._id),
+      {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }
+    )
+    .then(response => {
+      console.log(response);
+      taskArray.splice(inputPosition.value, 1);
+      view.display();
+      console.log(taskArray);
+    });
+});
+
+//Update Task
+updateTask.addEventListener("click", e => {
+  const dataBody = {
+    description: inputDesc.value,
+    completed: inputComp.value
+  };
+
+  axios
+    .patch(
+      "http://localhost:3000/tasks/" +
+        encodeURIComponent(taskArray[inputPosition.value]._id),
+      dataBody,
+      {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }
+    )
+    .then(response => {
+      taskArray[inputPosition.value].description = inputDesc.value;
+      taskArray[inputPosition.value].completed = inputComp.value;
+      view.display();
+    });
+});
 
 //Read Task
-
 window.addEventListener("load", e => {
   axios
     .get("http://localhost:3000/tasks", {
@@ -95,70 +130,22 @@ window.addEventListener("load", e => {
       }
     })
     .then(response => {
-      // console.log(response);
-      console.log(response.data);
       const allTask = response.data; //Array of the task
 
-      // profilePhoto.src = "data:image/jpg;base64,";
-      //Delete Task
-      // allTask[]
-      deleteTask.addEventListener("click", e => {
-        axios
-          .delete(
-            "http://localhost:3000/tasks/" +
-              encodeURIComponent(allTask[inputPosition.value]._id),
-            {
-              headers: {
-                Authorization: "Bearer " + token
-              }
-            }
-          )
-          .then(response => {
-            // view.display();
-          });
-      });
+      taskUl.innerHTML = "";
+      allTask.forEach(task => {
+        taskArray.push(task);
+        // console.log(task.description + " " + task.completed);
+        const taskList = document.createElement("li");
+        // taskList.textContent = task.description + " " + task.completed;
 
-      //Update Task
-      updateTask.addEventListener("click", e => {
-        const dataBody = {
-          description: inputDesc.value,
-          completed: inputComp.value
-        };
-
-        axios
-          .patch(
-            "http://localhost:3000/tasks/" +
-              encodeURIComponent(allTask[inputPosition.value]._id),
-            dataBody,
-            {
-              headers: {
-                Authorization: "Bearer " + token
-              }
-            }
-          )
-          .then(response => {
-            // view.display();
-          });
-      });
-
-      const view = {
-        display() {
-          allTask.forEach(task => {
-            // console.log(task.description + " " + task.completed);
-            const taskList = document.createElement("li");
-
-            // taskList.textContent = task.description + " " + task.completed;
-
-            if (task.completed === true) {
-              taskList.textContent = task.description + " " + "✔";
-            } else {
-              taskList.textContent = task.description + " " + "✖";
-            }
-            taskUl.appendChild(taskList);
-          });
+        if (task.completed === true) {
+          taskList.textContent = task.description + " " + "✔";
+        } else {
+          taskList.textContent = task.description + " " + "✖";
         }
-      };
-      view.display();
+        taskUl.appendChild(taskList);
+      });
     })
     .catch(error => {
       console.log(error);

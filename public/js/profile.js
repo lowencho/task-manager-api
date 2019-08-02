@@ -20,6 +20,7 @@ const token = localStorage.getItem("token");
 uploadPhoto.addEventListener("click", e => {
   const formData = new FormData();
   formData.append("avatar", choosePhoto.files[0]);
+  console.log(choosePhoto.files[0]);
   axios
     .post("http://localhost:3000/users/me/avatar", formData, {
       headers: {
@@ -29,8 +30,16 @@ uploadPhoto.addEventListener("click", e => {
     })
     .then(response => {
       console.log(response);
-      const imageBuffer = response.data.avatar.data;
-      // profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
+      // const imageBuffer = response.data.avatar.data;
+      var imageBuffer = btoa(
+        String.fromCharCode.apply(
+          null,
+          new Uint8Array(response.data.avatar.data)
+        )
+      );
+      // console.log(base64String);
+      profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
+      imageArray.push(imageBuffer);
     })
     .catch(error => {
       console.log(error);
@@ -90,6 +99,21 @@ window.addEventListener("load", () => {
       userId.textContent = "ID: " + response.data._id;
       userEmail.textContent = "Email: " + response.data.email;
       userAge.textContent = "Age: " + response.data.age;
+
+      axios
+        .get(
+          "http://localhost:3000/users/" +
+            encodeURIComponent(response.data._id) +
+            "/avatar"
+        )
+        .then(response => {
+          console.log(response.data);
+
+          const imageBuffers = btoa(
+            String.fromCharCode.apply(null, new Uint8Array(response.data))
+          );
+          profilePhoto.src = "data:image/jpg;base64," + imageBuffers;
+        });
     })
     .catch(error => {
       console.log(error);
