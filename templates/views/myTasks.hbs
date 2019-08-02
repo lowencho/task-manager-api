@@ -8,6 +8,9 @@
       integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
       crossorigin="anonymous"
     />
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Heebo&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="div-container">
@@ -19,13 +22,13 @@
       <hr>
       <br>
       <form style='padding:10px;' >
-        <label>Description</label><input id="desc-input" name='description' autocomplete="off" required>
-        <label>Completed</label><input id="comp-input" name='completed' autocomplete="off" type="text" list="boolean">
+        <label>Description </label><input id="desc-input" name='description' autocomplete="off" required>
+        <label>Completed </label><input id="comp-input" name='completed' autocomplete="off" type="text" list="boolean">
         <datalist id="boolean">
         <option value="true">
         <option value="false">
       </datalist>
-        <input type="submit" value="Create">
+        <input id='create' type="submit" value="Create">
 
       </form>
       <div>
@@ -36,6 +39,7 @@
       <button id='logout'>Log out</button>
       <button id='delete-account'>Delete Account</button>
     </div>
+    <br>
     <label>Sort By Completed: </label> <input id="sort-input" autocomplete="off" type="text" list="boolean">
     <datalist id="boolean">
     <option value="true">

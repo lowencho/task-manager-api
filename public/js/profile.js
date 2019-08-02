@@ -39,7 +39,7 @@ uploadPhoto.addEventListener("click", e => {
       );
       // console.log(base64String);
       profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
-      imageArray.push(imageBuffer);
+      localStorage.setItem("imageBuffer", imageBuffer);
     })
     .catch(error => {
       console.log(error);
@@ -100,6 +100,7 @@ window.addEventListener("load", () => {
       userEmail.textContent = "Email: " + response.data.email;
       userAge.textContent = "Age: " + response.data.age;
 
+      //Read Avatar
       axios
         .get(
           "http://localhost:3000/users/" +
@@ -107,14 +108,16 @@ window.addEventListener("load", () => {
             "/avatar"
         )
         .then(response => {
-          console.log(response.data);
-
-          const imageBuffers = btoa(
-            String.fromCharCode.apply(null, new Uint8Array(response.data))
-          );
-          profilePhoto.src = "data:image/jpg;base64," + imageBuffers;
+          console.log(response);
+          profilePhoto.src = "data:image/jpg;base64,";
         });
+      // const imageBuffers = btoa(
+      //   String.fromCharCode.apply(null, new Uint8Array(response.data))
+      // );
+      // const myAvatar = localStorage.getItem("imageBuffer");
+      // profilePhoto.src = "data:image/jpg;base64," + myAvatar;
     })
+
     .catch(error => {
       console.log(error);
     });

@@ -4,7 +4,6 @@ const inputComp = document.querySelector("#comp-input");
 const tasks = document.querySelector("#tasks");
 const deleteTask = document.querySelector("#delete");
 const updateTask = document.querySelector("#update");
-// const inputID = document.querySelector("#id");
 const inputPosition = document.querySelector("#position");
 const deleteAccount = document.querySelector("#delete-account");
 const sortByCompleted = document.querySelector("#sort-input");
@@ -89,10 +88,8 @@ deleteTask.addEventListener("click", e => {
       }
     )
     .then(response => {
-      console.log(response);
       taskArray.splice(inputPosition.value, 1);
       view.display();
-      console.log(taskArray);
     });
 });
 
@@ -173,7 +170,6 @@ logoutButton.addEventListener("click", e => {
 
 //Delete Account
 deleteAccount.addEventListener("click", () => {
-  // const data = {};
   axios
     .delete("http://localhost:3000/users/me", {
       headers: { Authorization: "Bearer " + token }
@@ -195,27 +191,9 @@ sortByCompleted.addEventListener("change", () => {
         }
       })
       .then(response => {
-        // console.log(response);
-        console.log(response.data);
-        const allTask = response.data; //Array of the task
-
-        // profilePhoto.src = "data:image/jpg;base64,";
-
-        allTask.forEach(task => {
-          // console.log(task.description + " " + task.completed);
-          const taskList = document.createElement("li");
-
-          // taskList.textContent = task.description + " " + task.completed;
-
-          if (task.completed === true) {
-            taskList.textContent = task.description + " " + "✔";
-          } else {
-            taskList.textContent = task.description + " " + "✖";
-          }
-          taskUl.appendChild(taskList);
-        });
+        view.display();
       });
-  } else if (sortByCompleted.value === false) {
+  } else {
     axios
       .get("http://localhost:3000/tasks?completed=false", {
         headers: {
@@ -223,25 +201,7 @@ sortByCompleted.addEventListener("change", () => {
         }
       })
       .then(response => {
-        // console.log(response);
-        // console.log(response.data);
-        const allTask = response.data; //Array of the task
-
-        // profilePhoto.src = "data:image/jpg;base64,";
-
-        allTask.forEach(task => {
-          // console.log(task.description + " " + task.completed);
-          const taskList = document.createElement("li");
-
-          // taskList.textContent = task.description + " " + task.completed;
-
-          if (task.completed === true) {
-            taskList.textContent = task.description + " " + "✔";
-          } else {
-            taskList.textContent = task.description + " " + "✖";
-          }
-          taskUl.appendChild(taskList);
-        });
+        view.display();
       });
   }
 });
