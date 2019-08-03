@@ -5,10 +5,8 @@ const tasks = document.querySelector("#tasks");
 const deleteTask = document.querySelector("#delete");
 const updateTask = document.querySelector("#update");
 const inputPosition = document.querySelector("#position");
-const deleteAccount = document.querySelector("#delete-account");
 const sortByCompleted = document.querySelector("#sort-input");
 const sort = document.querySelector("#sort");
-// const sortButton = document.querySelector("#sort-button");
 
 const token = localStorage.getItem("token");
 
@@ -17,6 +15,9 @@ const taskUl = document.querySelector("#ul");
 
 //Logout
 const logoutButton = document.querySelector("#logout");
+const deleteAccount = document.querySelector("#delete-account");
+const profileSetting = document.querySelector("#profile-setting");
+const dropdownCon = document.getElementById("dropdown-setting");
 
 var taskArray = [];
 console.log(taskArray);
@@ -116,6 +117,9 @@ updateTask.addEventListener("click", e => {
       taskArray[inputPosition.value].description = inputDesc.value;
       taskArray[inputPosition.value].completed = inputComp.value;
       view.display();
+
+      inputDesc.value = "";
+      inputComp.value = "";
     });
 });
 
@@ -148,6 +152,11 @@ window.addEventListener("load", e => {
     .catch(error => {
       console.log(error);
     });
+});
+
+//Dropdown for logging out / Delete account
+profileSetting.addEventListener("click", () => {
+  dropdownCon.classList.toggle("show");
 });
 
 //Logout User
@@ -199,15 +208,12 @@ sortByCompleted.addEventListener("change", () => {
         taskComplete.forEach(task => {
           const taskList = document.createElement("li");
 
-          if (task.completed === true) {
-            taskList.textContent = task.description + " " + "✔";
-          } else {
-            taskList.textContent = task.description + " " + "✖";
-          }
+          taskList.textContent = task.description + " " + "✔";
+
           taskUl.appendChild(taskList);
         });
       });
-  } else {
+  } else if (sortByCompleted.value === "false") {
     axios
       .get("http://localhost:3000/tasks?completed=false", {
         headers: {
@@ -222,13 +228,12 @@ sortByCompleted.addEventListener("change", () => {
         taskComplete.forEach(task => {
           const taskList = document.createElement("li");
 
-          if (task.completed === true) {
-            taskList.textContent = task.description + " " + "✔";
-          } else {
-            taskList.textContent = task.description + " " + "✖";
-          }
+          taskList.textContent = task.description + " " + "✖";
+
           taskUl.appendChild(taskList);
         });
       });
+  } else {
+    view.display();
   }
 });

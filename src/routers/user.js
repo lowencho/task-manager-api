@@ -164,7 +164,7 @@ router.delete("/users/me/avatar", auth, async (req, res) => {
   res.send();
 });
 
-//View avatar image
+//View avatar image by ID
 router.get("/users/:id/avatar", async (req, res) => {
   try {
     const userId = await user.findById(req.params.id);

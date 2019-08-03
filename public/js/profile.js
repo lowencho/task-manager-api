@@ -19,6 +19,8 @@ const token = localStorage.getItem("token");
 //Logout
 const logoutButton = document.querySelector("#logout");
 const deleteAccount = document.querySelector("#delete-account");
+const profileSetting = document.querySelector("#profile-setting");
+const dropdownCon = document.getElementById("dropdown-setting");
 
 //Upload image to db
 uploadPhoto.addEventListener("click", e => {
@@ -33,7 +35,7 @@ uploadPhoto.addEventListener("click", e => {
       }
     })
     .then(response => {
-      console.log(response);
+      // console.log(response);
       // const imageBuffer = response.data.avatar.data;
       var imageBuffer = btoa(
         String.fromCharCode.apply(
@@ -52,9 +54,14 @@ uploadPhoto.addEventListener("click", e => {
 
 //Delete image
 deletePhoto.addEventListener("click", e => {
-  axios.delete("http://localhost:3000/users/me/avatar", {
-    headers: { Authorization: "Bearer " + token }
-  });
+  axios
+    .delete("http://localhost:3000/users/me/avatar", {
+      headers: { Authorization: "Bearer " + token }
+    })
+    .then(response => {
+      localStorage.removeItem("imageBuffer");
+      location.reload();
+    });
 });
 
 //Update Photo modal
@@ -98,7 +105,7 @@ window.addEventListener("load", () => {
       }
     })
     .then(response => {
-      console.log(response);
+      // console.log(response);
       userName.textContent = "Name: " + response.data.name;
       userId.textContent = "ID: " + response.data._id;
       userEmail.textContent = "Email: " + response.data.email;
@@ -112,19 +119,20 @@ window.addEventListener("load", () => {
             "/avatar"
         )
         .then(response => {
-          console.log(response.data);
-          profilePhoto.src = "data:image/jpg;base64,";
+          // console.log(response);
+          const buffer = localStorage.getItem("imageBuffer");
+          profilePhoto.src = "data:image/jpg;base64," + buffer;
         });
-      // const imageBuffers = btoa(
-      //   String.fromCharCode.apply(null, new Uint8Array(response.data))
-      // );
-      // const myAvatar = localStorage.getItem("imageBuffer");
-      // profilePhoto.src = "data:image/jpg;base64," + myAvatar;
     })
 
     .catch(error => {
       console.log(error);
     });
+});
+
+//Dropdown for logging out / Delete account
+profileSetting.addEventListener("click", () => {
+  dropdownCon.classList.toggle("show");
 });
 
 //Logout User
