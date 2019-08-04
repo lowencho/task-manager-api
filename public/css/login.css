@@ -54,3 +54,15 @@ label {
   color: black;
   width: 100%;
 }
+
+.custom-validator {
+  display: none;
+  padding: 6px;
+  background-color: #c0392b;
+  color: white;
+  font-size: 13.5px;
+}
+
+.custom-show {
+  display: block;
+}

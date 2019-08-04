@@ -20,7 +20,7 @@ const profileSetting = document.querySelector("#profile-setting");
 const dropdownCon = document.getElementById("dropdown-setting");
 
 var taskArray = [];
-console.log(taskArray);
+// console.log(taskArray);
 
 const view = {
   display() {
@@ -159,6 +159,21 @@ profileSetting.addEventListener("click", () => {
   dropdownCon.classList.toggle("show");
 });
 
+//Close dropdown if the user click outside
+window.addEventListener("click", e => {
+  console.log(e);
+  const dropdown = document.getElementsByClassName("dropdown-content");
+  //!matches button
+  if (!e.target.matches(".profile-set")) {
+    //div dropdown
+    for (var i = 0; i < dropdown.length; i++) {
+      if (dropdown[i].classList.contains("show")) {
+        dropdown[i].classList.remove("show");
+      }
+    }
+  }
+});
+
 //Logout User
 logoutButton.addEventListener("click", e => {
   const dataBody = {};
@@ -236,4 +251,22 @@ sortByCompleted.addEventListener("change", () => {
   } else {
     view.display();
   }
+});
+
+//Read first char
+window.addEventListener("load", () => {
+  axios
+    .get("http://localhost:3000/users/me", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+    .then(response => {
+      const getFirstChar = () => {
+        const char = response.data.name;
+        return char.charAt(0);
+      };
+
+      profileSetting.textContent = getFirstChar();
+    });
 });

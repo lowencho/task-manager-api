@@ -111,6 +111,13 @@ window.addEventListener("load", () => {
       userEmail.textContent = "Email: " + response.data.email;
       userAge.textContent = "Age: " + response.data.age;
 
+      const getFirstChar = () => {
+        const char = response.data.name;
+        return char.charAt(0);
+      };
+
+      profileSetting.textContent = getFirstChar();
+
       //Read Avatar
       axios
         .get(
@@ -133,6 +140,21 @@ window.addEventListener("load", () => {
 //Dropdown for logging out / Delete account
 profileSetting.addEventListener("click", () => {
   dropdownCon.classList.toggle("show");
+});
+
+//Close dropdown if the user click outside
+window.addEventListener("click", e => {
+  console.log(e);
+  const dropdown = document.getElementsByClassName("dropdown-content");
+  //!matches button
+  if (!e.target.matches(".profile-set")) {
+    //div dropdown
+    for (var i = 0; i < dropdown.length; i++) {
+      if (dropdown[i].classList.contains("show")) {
+        dropdown[i].classList.remove("show");
+      }
+    }
+  }
 });
 
 //Logout User
