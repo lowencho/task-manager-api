@@ -174,7 +174,9 @@ router.get("/users/:id/avatar", async (req, res) => {
     }
     // res.set("Content-Type", "image/jpg");
     res.set("Content-Type", "image/png");
-    res.send(userId.avatar);
+    //converting ASCII image to base64
+    const base64Img = Buffer.from(userId.avatar).toString("base64");
+    res.send({ avatar: base64Img });
   } catch (error) {
     res.status(404).send();
   }

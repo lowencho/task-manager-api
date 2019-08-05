@@ -45,7 +45,7 @@ uploadPhoto.addEventListener("click", e => {
       );
       // console.log(base64String);
       profilePhoto.src = "data:image/jpg;base64," + imageBuffer;
-      localStorage.setItem("imageBuffer", imageBuffer);
+      location.reload();
     })
     .catch(error => {
       console.log(error);
@@ -126,8 +126,9 @@ window.addEventListener("load", () => {
             "/avatar"
         )
         .then(response => {
-          // console.log(response);
-          const buffer = localStorage.getItem("imageBuffer");
+          // console.log(response.data.avatar);
+          const buffer = response.data.avatar;
+
           profilePhoto.src = "data:image/jpg;base64," + buffer;
         });
     })
@@ -144,7 +145,7 @@ profileSetting.addEventListener("click", () => {
 
 //Close dropdown if the user click outside
 window.addEventListener("click", e => {
-  console.log(e);
+  // console.log(e);
   const dropdown = document.getElementsByClassName("dropdown-content");
   //!matches button
   if (!e.target.matches(".profile-set")) {
