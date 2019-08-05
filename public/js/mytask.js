@@ -134,20 +134,21 @@ window.addEventListener("load", e => {
     .then(response => {
       const allTask = response.data; //Array of the task
 
-      taskUl.innerHTML = "";
+      // taskUl.innerHTML = "";
       allTask.forEach(task => {
         taskArray.push(task);
         // console.log(task.description + " " + task.completed);
-        const taskList = document.createElement("li");
-        // taskList.textContent = task.description + " " + task.completed;
-
-        if (task.completed === true) {
-          taskList.textContent = task.description + " " + "✔";
-        } else {
-          taskList.textContent = task.description + " " + "✖";
-        }
-        taskUl.appendChild(taskList);
+        // const taskList = document.createElement("li");
+        // // taskList.textContent = task.description + " " + task.completed;
+        //
+        // if (task.completed === true) {
+        //   taskList.textContent = task.description + " " + "✔";
+        // } else {
+        //   taskList.textContent = task.description + " " + "✖";
+        // }
+        // taskUl.appendChild(taskList);
       });
+      view.display();
     })
     .catch(error => {
       console.log(error);
@@ -161,7 +162,7 @@ profileSetting.addEventListener("click", () => {
 
 //Close dropdown if the user click outside
 window.addEventListener("click", e => {
-  console.log(e);
+  // console.log(e);
   const dropdown = document.getElementsByClassName("dropdown-content");
   //!matches button
   if (!e.target.matches(".profile-set")) {
