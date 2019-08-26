@@ -11,7 +11,7 @@ signinForm.addEventListener("submit", e => {
   e.preventDefault();
   // console.log(e);
   axios
-    .post("http://localhost:3000/users/login", {
+    .post("/users/login", {
       email: emailInput.value,
       password: passwordInput.value
     })
@@ -35,7 +35,7 @@ const token = localStorage.getItem("token");
 signinForm.addEventListener("submit", e => {
   e.preventDefault();
   axios
-    .get("http://localhost:3000/profile", {
+    .get("/profile", {
       headers: {
         Authorization: "Bearer " + token
       }

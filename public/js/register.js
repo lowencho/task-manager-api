@@ -6,7 +6,7 @@ const registerForm = document.querySelector("form");
 
 registerForm.addEventListener("submit", e => {
   e.preventDefault();
-  axios("http://localhost:3000/profile", {
+  axios("/profile", {
     method: "GET",
     header: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ registerForm.addEventListener("submit", e => {
 registerForm.addEventListener("submit", e => {
   e.preventDefault();
   axios
-    .post("http://localhost:3000/users", {
+    .post("/users", {
       name: inputName.value,
       email: inputEmail.value,
       age: inputAge.value,

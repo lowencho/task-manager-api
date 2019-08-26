@@ -28,7 +28,7 @@ uploadPhoto.addEventListener("click", e => {
   formData.append("avatar", choosePhoto.files[0]);
   console.log(choosePhoto.files[0]);
   axios
-    .post("http://localhost:3000/users/me/avatar", formData, {
+    .post("/users/me/avatar", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: "Bearer " + token
@@ -55,7 +55,7 @@ uploadPhoto.addEventListener("click", e => {
 //Delete image
 deletePhoto.addEventListener("click", e => {
   axios
-    .delete("http://localhost:3000/users/me/avatar", {
+    .delete("/users/me/avatar", {
       headers: { Authorization: "Bearer " + token }
     })
     .then(response => {
@@ -99,7 +99,7 @@ choosePhoto.addEventListener("change", () => {
 //Read user profile
 window.addEventListener("load", () => {
   axios
-    .get("http://localhost:3000/users/me", {
+    .get("/users/me", {
       headers: {
         Authorization: "Bearer " + token
       }
@@ -163,7 +163,7 @@ logoutButton.addEventListener("click", e => {
   const dataBody = {};
   console.log("Clicked");
   axios
-    .post("http://localhost:3000/users/logout", dataBody, {
+    .post("/users/logout", dataBody, {
       headers: {
         Authorization: "Bearer " + token
       }
@@ -180,7 +180,7 @@ logoutButton.addEventListener("click", e => {
 //Delete Account
 deleteAccount.addEventListener("click", () => {
   axios
-    .delete("http://localhost:3000/users/me", {
+    .delete("/users/me", {
       headers: { Authorization: "Bearer " + token }
     })
     .then(response => {

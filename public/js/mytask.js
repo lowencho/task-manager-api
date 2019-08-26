@@ -43,7 +43,7 @@ createTask.addEventListener("submit", e => {
   e.preventDefault();
   axios
     .post(
-      "http://localhost:3000/tasks",
+      "/tasks",
       {
         description: inputDesc.value,
         completed: inputComp.value
@@ -81,8 +81,7 @@ createTask.addEventListener("submit", e => {
 deleteTask.addEventListener("click", e => {
   axios
     .delete(
-      "http://localhost:3000/tasks/" +
-        encodeURIComponent(taskArray[inputPosition.value]._id),
+      "/tasks/" + encodeURIComponent(taskArray[inputPosition.value]._id),
       {
         headers: {
           Authorization: "Bearer " + token
@@ -104,8 +103,7 @@ updateTask.addEventListener("click", e => {
 
   axios
     .patch(
-      "http://localhost:3000/tasks/" +
-        encodeURIComponent(taskArray[inputPosition.value]._id),
+      "/tasks/" + encodeURIComponent(taskArray[inputPosition.value]._id),
       dataBody,
       {
         headers: {
@@ -126,7 +124,7 @@ updateTask.addEventListener("click", e => {
 //Read Task
 window.addEventListener("load", e => {
   axios
-    .get("http://localhost:3000/tasks", {
+    .get("/tasks", {
       headers: {
         Authorization: "Bearer " + token
       }
@@ -180,7 +178,7 @@ logoutButton.addEventListener("click", e => {
   const dataBody = {};
   console.log("Clicked");
   axios
-    .post("http://localhost:3000/users/logout", dataBody, {
+    .post("/users/logout", dataBody, {
       headers: {
         Authorization: "Bearer " + token
       }
@@ -197,7 +195,7 @@ logoutButton.addEventListener("click", e => {
 //Delete Account
 deleteAccount.addEventListener("click", () => {
   axios
-    .delete("http://localhost:3000/users/me", {
+    .delete("/users/me", {
       headers: { Authorization: "Bearer " + token }
     })
     .then(response => {
@@ -211,7 +209,7 @@ sortByCompleted.addEventListener("change", () => {
   console.log("changed");
   if (sortByCompleted.value === "true") {
     axios
-      .get("http://localhost:3000/tasks?completed=true", {
+      .get("/tasks?completed=true", {
         headers: {
           Authorization: "Bearer " + token
         }
@@ -231,7 +229,7 @@ sortByCompleted.addEventListener("change", () => {
       });
   } else if (sortByCompleted.value === "false") {
     axios
-      .get("http://localhost:3000/tasks?completed=false", {
+      .get("/tasks?completed=false", {
         headers: {
           Authorization: "Bearer " + token
         }
@@ -257,7 +255,7 @@ sortByCompleted.addEventListener("change", () => {
 //Read first char
 window.addEventListener("load", () => {
   axios
-    .get("http://localhost:3000/users/me", {
+    .get("/users/me", {
       headers: {
         Authorization: "Bearer " + token
       }
